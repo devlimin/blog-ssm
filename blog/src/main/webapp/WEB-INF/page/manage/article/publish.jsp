@@ -49,7 +49,7 @@
 				if(sysCategory.length == 0) {
 					alert("必须选择文章分类！");
 				}
-				$("form")[0].submit();
+				$("#publish").submit();
 			}
 		</script>
 	</head>
@@ -62,7 +62,8 @@
 			<br />
 
 			<div>
-				<form:form action="${pageContext.request.contextPath }/article/manage/${publish == 'create' ? 'createhandler' : 'edithandler'}" 
+				<form:form id="publish"
+						   action="${pageContext.request.contextPath }/article/manage/${publish == 'create' ? 'createhandler' : 'edithandler'}"
 					modelAttribute="articleVo" cssClass="login-form" method="post" >
 					<form:hidden path="id"/>
 					<div>
@@ -83,8 +84,9 @@
 					<hr />
 					<div>
 						<div class="text-muted">文章分类</div>
-						<form:radiobuttons class="sysCategory" path="sysCategory" items="<%=Article.sysCategoryType.entrySet() %>" itemLabel="value" itemValue="key"
-							cssStyle="margin-left:10px"/>
+						<form:radiobuttons class="sysCategory"
+										   path="sysCategory" items="<%=Article.sysCategoryType.entrySet() %>" itemLabel="value" itemValue="key"
+										   cssStyle="margin-left:10px"/>
 					</div>
 					<hr />
 					<div class="text-center">

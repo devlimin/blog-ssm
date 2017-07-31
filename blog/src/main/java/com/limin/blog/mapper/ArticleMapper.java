@@ -1,12 +1,10 @@
 package com.limin.blog.mapper;
 
-import com.limin.blog.dto.ArticleVo;
 import com.limin.blog.entity.Article;
 import com.limin.blog.entity.ArticleExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
@@ -36,18 +34,4 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(Article record);
 
     int updateByPrimaryKey(Article record);
-
-
-
-	List<Article> selectByCid(long cid);
-
-	List<ArticleVo> selectArticleWithCommentCountByUid(Long userId);
-
-	List<ArticleVo> selectArticleWithCommentCountByUidAndCid(
-            @Param("userId") Long userId, @Param("categoryId") Long categoryId);
-
-
-	void deleteCategoryRelationByArticleId(Long articleId);
-
-	void insertRelationCategories(@Param("articleId") Long articleId, @Param("categoryIds") List<Long> categoryIds);
 }

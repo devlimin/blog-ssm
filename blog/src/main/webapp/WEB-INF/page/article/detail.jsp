@@ -3,6 +3,7 @@
 <%@ page import="com.limin.blog.entity.Comment" %>
 <%@ page import="com.limin.blog.entity.User" %>
 <%@ page import="com.limin.blog.dto.CommentVo" %>
+<%@ page import="com.limin.blog.entity.Category" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
@@ -36,40 +37,56 @@
 		<script type="text/javascript">
 			var supportNum = 0;
 			var againstNum = 0;
-			function support(articleId) {
-				if(supportNum == 0) {
-					$.ajax({
-						type: "post",
-						url: "${pageContext.request.contextPath }/article/support",
-						data: 'articleId='+${article.id},
-						success: function(msg) {
-							if(msg == "success") {
-								var support = parseInt($("#support").text());
-								$("#support").text(support+1);
-								supportNum = 1;
-								againstNum = 0;
-							}
-						}
-					})
-				}
+			function support() {
+			    var url = null;
+			    if (supportNum == 0) {
+			        url = "${pageContext.request.contextPath}/article/support";
+			        supportNum = 1;
+			        if (againstNum == 1) {
+						against();
+                        againstNum = 0;
+                    }
+				} else {
+			        url = "${pageContext.request.contextPath}/article/unsupport"
+					supportNum = 0;
+                }
+				$.ajax({
+                    type: "post",
+                    url: url,
+                    data: 'articleId='+${article.id},
+                    success: function(msg) {
+                        msg = $.trim(msg);
+                        if(msg != "fail") {
+                            $("#support").text(msg);
+                        }
+                    }
+                })
 			}
-			
-			function against(articleId) {
-				if(againstNum == 0) {
-					$.ajax({
-						type: "post",
-						url: "${pageContext.request.contextPath }/article/against",
-						data: 'articleId='+${article.id},
-						success: function(msg) {
-							if(msg == "success") {
-								var against = parseInt($("#against").text());
-								$("#against").text(against+1);
-								supportNum = 0;
-								againstNum = 1;
-							}
+			function against() {
+			    var url = null;
+			    if (againstNum == 0) {
+                    url = "${pageContext.request.contextPath}/article/against";
+                    againstNum = 1;
+                    if (supportNum == 1) {
+                        support();
+                        supportNum = 0;
+                    }
+				} else {
+                    url = "${pageContext.request.contextPath}/article/unagainst";
+                    againstNum = 0;
+                }
+				$.ajax({
+					type: "post",
+					url: url,
+					data: 'articleId='+${article.id},
+					success: function(msg) {
+						msg = $.trim(msg);
+						if(msg != "fail") {
+							$("#against").text(msg);
+
 						}
-					})
-				}
+					}
+				})
 			}
 			
 			function del(commentId) {
@@ -173,10 +190,18 @@
 							<div class="list-group-item text-center h4">
 								博文分类
 							</div>
-							<c:forEach items="${categoryList }" var="category">
+							<c:forEach items="${categoryVos }" var="categoryVo">
+								<%
+									ValueObject vo = (ValueObject) pageContext.findAttribute("categoryVo");
+									Category category = (Category) vo.get("category");
+									long articleCount = (long) vo.get("articleCount");
+									pageContext.setAttribute("category", category);
+									pageContext.setAttribute("articleCount", articleCount);
+								%>
+
 								<a href="${pageContext.request.contextPath }/article/list/${user.id}/${category.id}" class="list-group-item">
 									${category.type }
-									<span style="float: right">(${category.articlecount })</span>
+									<span style="float: right">(${articleCount })</span>
 								</a>
 							</c:forEach>
 						</ul>
@@ -196,7 +221,8 @@
 							</div>
 							<div class="pull-right">
 								<fmt:formatDate value="${article.releaseDate }" pattern="yyyy-MM-dd hh:mm:ss"/> |
-								阅读：${article.viewCount }
+								阅读：${viewCount } |
+								评论：${commentCount }
 							</div>
 						</div>
 						<br />
@@ -205,16 +231,15 @@
 							${article.content }
 						</div>
 						<div class="text-center">
-							<a 
-								class="btn btn-lg ${sessionScope.loginUser == null ? 'btn-danger' : 'btn-success' }" 
+							<a class="btn btn-lg ${sessionScope.loginUser == null ? 'btn-danger' : 'btn-success' }"
 										onclick="${sessionScope.loginUser == null ? '' : 'support()' }">
 								赞
-								<div id="support">${article.support }</div>
+								<div id="support">${support }</div>
 							</a>
 							<a class="btn btn-lg  ${sessionScope.loginUser == null ? 'btn-danger' : 'btn-success' }" 
 										onclick="${sessionScope.loginUser == null ? '' : 'against()' }">
 								踩
-								<div id="against">${article.against }</div>
+								<div id="against">${against }</div>
 							</a>
 						</div>
 					</div>

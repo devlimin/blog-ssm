@@ -2,7 +2,6 @@ package com.limin.blog.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class ArticleExample {
@@ -104,32 +103,6 @@ public class ArticleExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -403,232 +376,52 @@ public class ArticleExample {
         }
 
         public Criteria andReleaseDateEqualTo(Date value) {
-            addCriterionForJDBCDate("release_date =", value, "releaseDate");
+            addCriterion("release_date =", value, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("release_date <>", value, "releaseDate");
+            addCriterion("release_date <>", value, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("release_date >", value, "releaseDate");
+            addCriterion("release_date >", value, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("release_date >=", value, "releaseDate");
+            addCriterion("release_date >=", value, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateLessThan(Date value) {
-            addCriterionForJDBCDate("release_date <", value, "releaseDate");
+            addCriterion("release_date <", value, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("release_date <=", value, "releaseDate");
+            addCriterion("release_date <=", value, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateIn(List<Date> values) {
-            addCriterionForJDBCDate("release_date in", values, "releaseDate");
+            addCriterion("release_date in", values, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("release_date not in", values, "releaseDate");
+            addCriterion("release_date not in", values, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("release_date between", value1, value2, "releaseDate");
+            addCriterion("release_date between", value1, value2, "releaseDate");
             return (Criteria) this;
         }
 
         public Criteria andReleaseDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("release_date not between", value1, value2, "releaseDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportIsNull() {
-            addCriterion("support is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportIsNotNull() {
-            addCriterion("support is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportEqualTo(Integer value) {
-            addCriterion("support =", value, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportNotEqualTo(Integer value) {
-            addCriterion("support <>", value, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportGreaterThan(Integer value) {
-            addCriterion("support >", value, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportGreaterThanOrEqualTo(Integer value) {
-            addCriterion("support >=", value, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportLessThan(Integer value) {
-            addCriterion("support <", value, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportLessThanOrEqualTo(Integer value) {
-            addCriterion("support <=", value, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportIn(List<Integer> values) {
-            addCriterion("support in", values, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportNotIn(List<Integer> values) {
-            addCriterion("support not in", values, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportBetween(Integer value1, Integer value2) {
-            addCriterion("support between", value1, value2, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupportNotBetween(Integer value1, Integer value2) {
-            addCriterion("support not between", value1, value2, "support");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstIsNull() {
-            addCriterion("against is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstIsNotNull() {
-            addCriterion("against is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstEqualTo(Integer value) {
-            addCriterion("against =", value, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstNotEqualTo(Integer value) {
-            addCriterion("against <>", value, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstGreaterThan(Integer value) {
-            addCriterion("against >", value, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstGreaterThanOrEqualTo(Integer value) {
-            addCriterion("against >=", value, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstLessThan(Integer value) {
-            addCriterion("against <", value, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstLessThanOrEqualTo(Integer value) {
-            addCriterion("against <=", value, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstIn(List<Integer> values) {
-            addCriterion("against in", values, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstNotIn(List<Integer> values) {
-            addCriterion("against not in", values, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstBetween(Integer value1, Integer value2) {
-            addCriterion("against between", value1, value2, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgainstNotBetween(Integer value1, Integer value2) {
-            addCriterion("against not between", value1, value2, "against");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountIsNull() {
-            addCriterion("view_count is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountIsNotNull() {
-            addCriterion("view_count is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountEqualTo(Integer value) {
-            addCriterion("view_count =", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountNotEqualTo(Integer value) {
-            addCriterion("view_count <>", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountGreaterThan(Integer value) {
-            addCriterion("view_count >", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("view_count >=", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountLessThan(Integer value) {
-            addCriterion("view_count <", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountLessThanOrEqualTo(Integer value) {
-            addCriterion("view_count <=", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountIn(List<Integer> values) {
-            addCriterion("view_count in", values, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountNotIn(List<Integer> values) {
-            addCriterion("view_count not in", values, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountBetween(Integer value1, Integer value2) {
-            addCriterion("view_count between", value1, value2, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("view_count not between", value1, value2, "viewCount");
+            addCriterion("release_date not between", value1, value2, "releaseDate");
             return (Criteria) this;
         }
     }

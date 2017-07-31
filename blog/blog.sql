@@ -1,3 +1,4 @@
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -11,25 +12,9 @@ CREATE TABLE `article` (
   `title` varchar(255) NOT NULL COMMENT '标题',
   `content` longtext NOT NULL COMMENT '内容',
   `release_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发布日期',
-  `support` bigint(11) NOT NULL DEFAULT '0' COMMENT '赞数',
-  `against` bigint(11) NOT NULL DEFAULT '0' COMMENT '踩数',
-  `view_count` bigint(11) NOT NULL DEFAULT '0' COMMENT '阅读数',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for article_category
--- ----------------------------
-DROP TABLE IF EXISTS `article_category`;
-CREATE TABLE `article_category` (
-  `article_id` bigint(20) NOT NULL COMMENT '文章ID',
-  `category_id` bigint(20) NOT NULL COMMENT '分类ID',
-  PRIMARY KEY (`article_id`,`category_id`),
-  KEY `article_category_ibfk_2` (`category_id`),
-  CONSTRAINT `article_category_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `article_category_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for category
@@ -41,7 +26,7 @@ CREATE TABLE `category` (
   `type` varchar(50) NOT NULL COMMENT '分类名称',
   PRIMARY KEY (`id`),
   KEY `category_ibfk_1` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for comment
@@ -59,7 +44,7 @@ CREATE TABLE `comment` (
   KEY `article_id` (`article_id`),
   KEY `parent_id` (`parent_id`),
   CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user
@@ -77,5 +62,5 @@ CREATE TABLE `user` (
   `head_url` varchar(255) DEFAULT NULL COMMENT '头像url',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
-
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+SET FOREIGN_KEY_CHECKS=1;

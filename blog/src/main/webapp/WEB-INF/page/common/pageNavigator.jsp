@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:choose>
-    <c:when test="${pageResult.totalPage >= pageResult.pageNum}">
+    <c:when test="${empty pageResult || pageResult.totalPage >= pageResult.pageNum}">
         <nav class="text-center">
             <ul class="pagination">
                 <li>

@@ -62,8 +62,12 @@
 						<%
 							ValueObject vo = (ValueObject) pageContext.findAttribute("vo");
 							Article article = (Article) vo.get("article");
+							long viewCount = (long) vo.get("viewCount");
+							long commentCount = (long) vo.get("commentCount");
 							User user = (User) vo.get("user");
 							pageContext.setAttribute("article", article);
+							pageContext.setAttribute("viewCount", viewCount);
+							pageContext.setAttribute("commentCount", commentCount);
 							pageContext.setAttribute("user", user);
 						%>
 						<div id="">
@@ -82,25 +86,10 @@
 									</a>
 								</div>
 								<div class="text-muted">
-									
-									<%
-										String content = article.getContent();
-										int length = 0;
-										if(content.length() > 400) {
-											length = 300;
-										} else {
-											length = content.length();
-										}
-										content = content.substring(0, length);
-										pageContext.setAttribute("content", content);
-									%>
-									<pre>
-										${content }
-									</pre>
-									
+									${article.content }
 								</div>
 								<br>
-								<div class="">
+								<div class="pull-left" >
 									<a class="" style="color: black;" href="${pageContext.request.contextPath }/sys/new/${article.sysCategory }">
 										<%
 											pageContext.setAttribute("category",Article.sysCategoryType.get(article.getSysCategory()));
@@ -108,11 +97,10 @@
 										 ${category }
 									</a>
 								</div>
-								<div class="">
+								<div class="pull-right">
 									<fmt:formatDate value="${article.releaseDate}" pattern="yyyy-MM-dd hh:mm:ss"></fmt:formatDate>
-									阅读：${article.viewCount } |
-									赞：${article.support } |
-									踩：${article.against }
+									阅读：${viewCount } |
+									评论：${commentCount }
 								</div>
 								<div style="clear: both;"></div>
 								<hr>

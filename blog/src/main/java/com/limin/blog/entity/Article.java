@@ -15,63 +15,46 @@ public class Article {
 
     private Date releaseDate;
 
-    private Integer support;
-
-    private Integer against;
-
-    private Integer viewCount;
-
     private String content;
-    
+
     public Article() {
-	}
-    
-	public Article(Long id, Long userId, String sysCategory, String title,
-			Date releaseDate, Integer support, Integer against,
-			Integer viewCount, String content) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.sysCategory = sysCategory;
-		this.title = title;
-		this.releaseDate = releaseDate;
-		this.support = support;
-		this.against = against;
-		this.viewCount = viewCount;
-		this.content = content;
-	}
 
+    }
+    public Article(Long id, Long userId, String sysCategory, String title, Date releaseDate, String content) {
+        this.id = id;
+        this.userId = userId;
+        this.sysCategory = sysCategory;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.content = content;
+    }
 
+    public static final String MOBILE_DEVELOPEMENT="1";
+    public static final String WEB_FRONT_END="2";
+    public static final String ARCHITECTURE_DESIGN="3";
+    public static final String PROGRAMMING_LANGUAGE="4";
+    public static final String INTERNET="5";
+    public static final String DATABASE="6";
+    public static final String SYSTEM_OPERATIONAL="7";
+    public static final String CLOUD_COMPUTING="8";
+    public static final String RESEARCH_DEVELOPMENT_MANAGEMENT="9";
+    public static final String COMPREHENSIVE="10";
 
-	public static final String MOBILE_DEVELOPEMENT="1";
-	public static final String WEB_FRONT_END="2";
-	public static final String ARCHITECTURE_DESIGN="3";
-	public static final String PROGRAMMING_LANGUAGE="4";
-	public static final String INTERNET="5";
-	
-	public static final String DATABASE="6";
-	public static final String SYSTEM_OPERATIONAL="7";
-	public static final String CLOUD_COMPUTING="8";
-	public static final String RESEARCH_DEVELOPMENT_MANAGEMENT="9";
-	public static final String COMPREHENSIVE="10";
-	
-	public static final Map<String, String> sysCategoryType;
-	static {
-		sysCategoryType = new LinkedHashMap<String, String>();
-		sysCategoryType.put(MOBILE_DEVELOPEMENT, "移动开发");
-		sysCategoryType.put(WEB_FRONT_END, "Web前端");
-		sysCategoryType.put(ARCHITECTURE_DESIGN, "架构设计");
-		sysCategoryType.put(PROGRAMMING_LANGUAGE, "编程语言");
-		sysCategoryType.put(INTERNET, "互联网");
-		
-		sysCategoryType.put(DATABASE, "数据库");
-		sysCategoryType.put(SYSTEM_OPERATIONAL, "系统运维");
-		sysCategoryType.put(CLOUD_COMPUTING, "云计算");
-		sysCategoryType.put(RESEARCH_DEVELOPMENT_MANAGEMENT, "研发管理");
-		sysCategoryType.put(COMPREHENSIVE, "综合");
-	}
-    
-    
+    public static final Map<String, String> sysCategoryType;
+    static {
+        sysCategoryType = new LinkedHashMap<String, String>();
+        sysCategoryType.put(MOBILE_DEVELOPEMENT, "移动开发");
+        sysCategoryType.put(WEB_FRONT_END, "Web前端");
+        sysCategoryType.put(ARCHITECTURE_DESIGN, "架构设计");
+        sysCategoryType.put(PROGRAMMING_LANGUAGE, "编程语言");
+        sysCategoryType.put(INTERNET, "互联网");
+
+        sysCategoryType.put(DATABASE, "数据库");
+        sysCategoryType.put(SYSTEM_OPERATIONAL, "系统运维");
+        sysCategoryType.put(CLOUD_COMPUTING, "云计算");
+        sysCategoryType.put(RESEARCH_DEVELOPMENT_MANAGEMENT, "研发管理");
+        sysCategoryType.put(COMPREHENSIVE, "综合");
+    }
 
     public Long getId() {
         return id;
@@ -111,30 +94,6 @@ public class Article {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    public Integer getSupport() {
-        return support;
-    }
-
-    public void setSupport(Integer support) {
-        this.support = support;
-    }
-
-    public Integer getAgainst() {
-        return against;
-    }
-
-    public void setAgainst(Integer against) {
-        this.against = against;
-    }
-
-    public Integer getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
     }
 
     public String getContent() {

@@ -1,7 +1,8 @@
 <%@ page language="java" import="java.util.*,com.limin.blog.entity.Article" pageEncoding="UTF-8"%>
+<%@ page import="com.limin.blog.dto.ValueObject" %>
+<%@ page import="com.limin.blog.entity.Category" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 
 <!DOCTYPE html>
 <html>
@@ -47,49 +48,57 @@
 							<div class="list-group-item text-center h4">
 								博文分类
 							</div>
-							<c:forEach items="${categoryList }" var="category">
+							<c:forEach items="${categoryVos }" var="categoryVo">
+								<%
+									ValueObject vo = (ValueObject) pageContext.findAttribute("categoryVo");
+									Category category = (Category) vo.get("category");
+									long articleCount = (long) vo.get("articleCount");
+									pageContext.setAttribute("category", category);
+									pageContext.setAttribute("articleCount", articleCount);
+								%>
+
 								<a href="${pageContext.request.contextPath }/article/list/${user.id}/${category.id}" class="list-group-item">
-									${category.type }
-									<span style="float: right">(${category.articlecount })</span>
+										${category.type }
+									<span style="float: right">(${articleCount })</span>
 								</a>
 							</c:forEach>
 						</ul>
 					</div>
 				</div>
 				<div class="col-xs-9" style="background-color: white;">
-					<c:forEach items="${pageResult.pageItems }" var="article">
-						<div class="">
-							<div class="h1 text-left text-muted">
-								<a href="${pageContext.request.contextPath }/article/detail/${article.id}">${article.title }</a>
-							</div>
-							<div class="">
-								<% 
-										Article article = (Article)pageContext.findAttribute("article");
-										String content = article.getContent();
-										int length = 0;
-										if(content.length() > 300) {
-											length = 300;
-										} else {
-											length = content.length();
-										}
-										content = content.substring(0, length);
-										pageContext.setAttribute("content", content);
-									%>
-									<pre>
-										${content }
-									</pre>
-							</div>
-							<div class="pull-right">
-								<fmt:formatDate value="${article.releaseDate }" pattern="yyyy-MM-dd hh:mm:ss"/> |
-								阅读：${article.viewCount } |
-								赞：${article.support } |
-								踩：${article.against }
-							</div>
-							<hr color="white" style="height: 10px;" />
-						</div>
-					</c:forEach>
-
-					<jsp:include page="../common/pageNavigator.jsp" flush="true"></jsp:include>
+					<c:choose>
+						<c:when test="${empty pageResult}">
+							暂无数据
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${pageResult.pageItems }" var="articleVo">
+								<%
+									ValueObject vo = (ValueObject) pageContext.findAttribute("articleVo");
+									Article article = (Article) vo.get("article");
+									long viewCount = (long) vo.get("viewCount");
+									long commentCount = (long) vo.get("commentCount");
+									pageContext.setAttribute("article", article);
+									pageContext.setAttribute("viewCount", viewCount);
+									pageContext.setAttribute("commentCount", commentCount);
+								%>
+								<div class="">
+									<div class="h1 text-left text-muted">
+										<a href="${pageContext.request.contextPath }/article/detail/${article.id}">${article.title }</a>
+									</div>
+									<div class="">
+										${article.content }
+									</div>
+									<div class="pull-right">
+										<fmt:formatDate value="${article.releaseDate }" pattern="yyyy-MM-dd hh:mm:ss"/> |
+										阅读：${viewCount } |
+										评论：${commentCount }
+									</div>
+									<hr color="white" style="height: 10px;" />
+								</div>
+							</c:forEach>
+							<jsp:include page="../common/pageNavigator.jsp" flush="true"></jsp:include>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>

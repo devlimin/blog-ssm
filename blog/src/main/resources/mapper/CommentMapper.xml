@@ -1,138 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.limin.blog.mapper.CommentMapper">
-	<resultMap id="BaseResultMap" type="com.limin.blog.entity.Comment">
-		<id column="id" jdbcType="BIGINT" property="id" />
-		<result column="user_id" jdbcType="BIGINT" property="userId" />
-		<result column="article_id" jdbcType="BIGINT" property="articleId" />
-		<result column="release_date" jdbcType="TIMESTAMP" property="releaseDate" />
-		<result column="parent_id" jdbcType="BIGINT" property="parentId" />
-	</resultMap>
-	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
-		type="com.limin.blog.entity.Comment">
-		<result column="content" jdbcType="LONGVARCHAR" property="content" />
-	</resultMap>
-	<sql id="Example_Where_Clause">
-		<where>
-			<foreach collection="oredCriteria" item="criteria" separator="or">
-				<if test="criteria.valid">
-					<trim prefix="(" prefixOverrides="and" suffix=")">
-						<foreach collection="criteria.criteria" item="criterion">
-							<choose>
-								<when test="criterion.noValue">
-									and ${criterion.condition}
-								</when>
-								<when test="criterion.singleValue">
-									and ${criterion.condition} #{criterion.value}
-								</when>
-								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
-									#{criterion.secondValue}
-								</when>
-								<when test="criterion.listValue">
-									and ${criterion.condition}
-									<foreach close=")" collection="criterion.value" item="listItem"
-										open="(" separator=",">
-										#{listItem}
-									</foreach>
-								</when>
-							</choose>
-						</foreach>
-					</trim>
-				</if>
-			</foreach>
-		</where>
-	</sql>
-	<sql id="Update_By_Example_Where_Clause">
-		<where>
-			<foreach collection="example.oredCriteria" item="criteria"
-				separator="or">
-				<if test="criteria.valid">
-					<trim prefix="(" prefixOverrides="and" suffix=")">
-						<foreach collection="criteria.criteria" item="criterion">
-							<choose>
-								<when test="criterion.noValue">
-									and ${criterion.condition}
-								</when>
-								<when test="criterion.singleValue">
-									and ${criterion.condition} #{criterion.value}
-								</when>
-								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
-									#{criterion.secondValue}
-								</when>
-								<when test="criterion.listValue">
-									and ${criterion.condition}
-									<foreach close=")" collection="criterion.value" item="listItem"
-										open="(" separator=",">
-										#{listItem}
-									</foreach>
-								</when>
-							</choose>
-						</foreach>
-					</trim>
-				</if>
-			</foreach>
-		</where>
-	</sql>
-	<sql id="Base_Column_List">
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache">
+        <property name="timeToIdleSeconds" value="3600"/>
+        <property name="timeToLiveSeconds" value="3600"/>
+        <property name="maxEntriesLocalHeap" value="1000"/>
+        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+    </cache>
+
+    <resultMap id="BaseResultMap" type="com.limin.blog.entity.Comment">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="article_id" jdbcType="BIGINT" property="articleId"/>
+        <result column="release_date" jdbcType="TIMESTAMP" property="releaseDate"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+               type="com.limin.blog.entity.Comment">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem"
+                                             open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria"
+                     separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem"
+                                             open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
 		id, user_id, article_id, release_date, parent_id
 	</sql>
-	<sql id="Blob_Column_List">
+    <sql id="Blob_Column_List">
 		content
 	</sql>
-	<select id="selectByExampleWithBLOBs" parameterType="com.limin.blog.entity.CommentExample"
-		resultMap="ResultMapWithBLOBs">
-		select
-		<if test="distinct">
-			distinct
-		</if>
-		<include refid="Base_Column_List" />
-		,
-		<include refid="Blob_Column_List" />
-		from comment
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-		<if test="orderByClause != null">
-			order by ${orderByClause}
-		</if>
-	</select>
-	<select id="selectByExample" parameterType="com.limin.blog.entity.CommentExample"
-		resultMap="BaseResultMap">
-		select
-		<if test="distinct">
-			distinct
-		</if>
-		<include refid="Base_Column_List" />
-		from comment
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-		<if test="orderByClause != null">
-			order by ${orderByClause}
-		</if>
-	</select>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
-		resultMap="ResultMapWithBLOBs">
-		select
-		<include refid="Base_Column_List" />
-		,
-		<include refid="Blob_Column_List" />
-		from comment
-		where id = #{id,jdbcType=BIGINT}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByExampleWithBLOBs" parameterType="com.limin.blog.entity.CommentExample"
+            resultMap="ResultMapWithBLOBs">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from comment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" parameterType="com.limin.blog.entity.CommentExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from comment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long"
+            resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from comment
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from comment
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
-	<delete id="deleteByExample" parameterType="com.limin.blog.entity.CommentExample">
-		delete from comment
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-	</delete>
-	<insert id="insert" parameterType="com.limin.blog.entity.Comment">
+    <delete id="deleteByExample" parameterType="com.limin.blog.entity.CommentExample">
+        delete from comment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.limin.blog.entity.Comment">
 		insert into comment (id, user_id, article_id,
 		release_date, parent_id, content
 		)
@@ -141,127 +149,127 @@
 		#{releaseDate,jdbcType=TIMESTAMP}, #{parentId,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.limin.blog.entity.Comment">
-		insert into comment
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="userId != null">
-				user_id,
-			</if>
-			<if test="articleId != null">
-				article_id,
-			</if>
-			<if test="releaseDate != null">
-				release_date,
-			</if>
-			<if test="parentId != null">
-				parent_id,
-			</if>
-			<if test="content != null">
-				content,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=BIGINT},
-			</if>
-			<if test="userId != null">
-				#{userId,jdbcType=BIGINT},
-			</if>
-			<if test="articleId != null">
-				#{articleId,jdbcType=BIGINT},
-			</if>
-			<if test="releaseDate != null">
-				#{releaseDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="parentId != null">
-				#{parentId,jdbcType=BIGINT},
-			</if>
-			<if test="content != null">
-				#{content,jdbcType=LONGVARCHAR},
-			</if>
-		</trim>
-	</insert>
-	<select id="countByExample" parameterType="com.limin.blog.entity.CommentExample"
-		resultType="java.lang.Long">
-		select count(*) from comment
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-	</select>
-	<update id="updateByExampleSelective" parameterType="map">
-		update comment
-		<set>
-			<if test="record.id != null">
-				id = #{record.id,jdbcType=BIGINT},
-			</if>
-			<if test="record.userId != null">
-				user_id = #{record.userId,jdbcType=BIGINT},
-			</if>
-			<if test="record.articleId != null">
-				article_id = #{record.articleId,jdbcType=BIGINT},
-			</if>
-			<if test="record.releaseDate != null">
-				release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="record.parentId != null">
-				parent_id = #{record.parentId,jdbcType=BIGINT},
-			</if>
-			<if test="record.content != null">
-				content = #{record.content,jdbcType=LONGVARCHAR},
-			</if>
-		</set>
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByExampleWithBLOBs" parameterType="map">
-		update comment
-		set id = #{record.id,jdbcType=BIGINT},
-		user_id = #{record.userId,jdbcType=BIGINT},
-		article_id = #{record.articleId,jdbcType=BIGINT},
-		release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
-		parent_id = #{record.parentId,jdbcType=BIGINT},
-		content = #{record.content,jdbcType=LONGVARCHAR}
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByExample" parameterType="map">
-		update comment
-		set id = #{record.id,jdbcType=BIGINT},
-		user_id = #{record.userId,jdbcType=BIGINT},
-		article_id = #{record.articleId,jdbcType=BIGINT},
-		release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
-		parent_id = #{record.parentId,jdbcType=BIGINT}
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByPrimaryKeySelective" parameterType="com.limin.blog.entity.Comment">
-		update comment
-		<set>
-			<if test="userId != null">
-				user_id = #{userId,jdbcType=BIGINT},
-			</if>
-			<if test="articleId != null">
-				article_id = #{articleId,jdbcType=BIGINT},
-			</if>
-			<if test="releaseDate != null">
-				release_date = #{releaseDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="parentId != null">
-				parent_id = #{parentId,jdbcType=BIGINT},
-			</if>
-			<if test="content != null">
-				content = #{content,jdbcType=LONGVARCHAR},
-			</if>
-		</set>
-		where id = #{id,jdbcType=BIGINT}
-	</update>
-	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.limin.blog.entity.Comment">
+    <insert id="insertSelective" parameterType="com.limin.blog.entity.Comment">
+        insert into comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="releaseDate != null">
+                release_date,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="articleId != null">
+                #{articleId,jdbcType=BIGINT},
+            </if>
+            <if test="releaseDate != null">
+                #{releaseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.limin.blog.entity.CommentExample"
+            resultType="java.lang.Long">
+        select count(*) from comment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update comment
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=BIGINT},
+            </if>
+            <if test="record.articleId != null">
+                article_id = #{record.articleId,jdbcType=BIGINT},
+            </if>
+            <if test="record.releaseDate != null">
+                release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.parentId != null">
+                parent_id = #{record.parentId,jdbcType=BIGINT},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update comment
+        set id = #{record.id,jdbcType=BIGINT},
+        user_id = #{record.userId,jdbcType=BIGINT},
+        article_id = #{record.articleId,jdbcType=BIGINT},
+        release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+        content = #{record.content,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update comment
+        set id = #{record.id,jdbcType=BIGINT},
+        user_id = #{record.userId,jdbcType=BIGINT},
+        article_id = #{record.articleId,jdbcType=BIGINT},
+        release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
+        parent_id = #{record.parentId,jdbcType=BIGINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.limin.blog.entity.Comment">
+        update comment
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="articleId != null">
+                article_id = #{articleId,jdbcType=BIGINT},
+            </if>
+            <if test="releaseDate != null">
+                release_date = #{releaseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.limin.blog.entity.Comment">
 		update comment
 		set user_id = #{userId,jdbcType=BIGINT},
 		article_id = #{articleId,jdbcType=BIGINT},
@@ -270,7 +278,7 @@
 		content = #{content,jdbcType=LONGVARCHAR}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.limin.blog.entity.Comment">
+    <update id="updateByPrimaryKey" parameterType="com.limin.blog.entity.Comment">
 		update comment
 		set user_id = #{userId,jdbcType=BIGINT},
 		article_id = #{articleId,jdbcType=BIGINT},
@@ -279,28 +287,28 @@
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<!-- custom -->
+    <!-- custom -->
 
 
-	<delete id="deleteCascadeByPrimaryKey" parameterType="_long">
+    <delete id="deleteCascadeByPrimaryKey" parameterType="_long">
 		delete
 		from comment
 		where comment.id=#{id}
 		or comment.parent_id=#{id}
 	</delete>
 
-	<resultMap type="com.limin.blog.dto.CommentAndArticle" id="commentAndArticle">
-		<id column="id" jdbcType="BIGINT" property="id" />
-		<result column="user_id" jdbcType="BIGINT" property="userId" />
-		<result column="article_id" jdbcType="BIGINT" property="articleId" />
-		<result column="release_date" jdbcType="TIMESTAMP" property="releaseDate" />
-		<result column="content" jdbcType="LONGVARCHAR" property="content" />
-		<result column="title" property="articleTitle" />
-		<result column="username" property="username" />
-	</resultMap>
+    <resultMap type="com.limin.blog.dto.CommentAndArticle" id="commentAndArticle">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="article_id" jdbcType="BIGINT" property="articleId"/>
+        <result column="release_date" jdbcType="TIMESTAMP" property="releaseDate"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="title" property="articleTitle"/>
+        <result column="username" property="username"/>
+    </resultMap>
 
-	<select id="selectCommentAndArticleMyArticle" parameterType="_long"
-		resultMap="commentAndArticle">
+    <select id="selectCommentAndArticleMyArticle" parameterType="_long"
+            resultMap="commentAndArticle">
 		select
 		c.id, c.user_id, c.article_id, c.content, c.release_date, a.title,
 		u.username
@@ -310,8 +318,8 @@
 		on c.user_id = u.id
 	</select>
 
-	<select id="selectCommentAndArticleMyPublish" parameterType="_long"
-		resultMap="commentAndArticle">
+    <select id="selectCommentAndArticleMyPublish" parameterType="_long"
+            resultMap="commentAndArticle">
 		select
 		c.id, c.user_id, c.article_id, c.content, c.release_date, a.title, u.username
 		from comment c inner join article a

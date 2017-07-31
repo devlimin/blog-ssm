@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="com.limin.blog.dto.ValueObject" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
@@ -83,10 +84,15 @@
 					<th class="text-center">操作</th>
 				</thead>
 				<tbody>
-					<c:forEach items="${categories }" var="category">
+					<c:forEach items="${categoryVos }" var="categoryVo">
+						<%
+							ValueObject vo = (ValueObject) pageContext.findAttribute("categoryVo");
+							pageContext.setAttribute("category",vo.get("category"));
+							pageContext.setAttribute("articleCount", vo.get("articleCount"));
+						%>
 						<tr id="${category.id }" class="category">
 							<td class="type">${category.type }</td>
-							<td>${category.articlecount }</td>
+							<td>${articleCount }</td>
 							<td class="text-center">
 								<a href="javascript:void(0);" onclick="edit(${category.id},'${category.type }')">编辑</a>
 								<a href="javascript:void(0);" onclick="del(${category.id})">删除</a>

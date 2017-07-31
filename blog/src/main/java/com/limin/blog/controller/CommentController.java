@@ -41,12 +41,12 @@ public class CommentController {
     public ModelAndView list(
             @PathVariable(name = "option", required = true) String option,
             @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
-            @RequestParam(name = "pageSize", defaultValue = "1") Integer pageSize,
+            @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
             HttpSession session) {
         ModelAndView mv = new ModelAndView("/manage/comment/list");
         mv.addObject("option", "commentManage");
         User user = (User) session.getAttribute("loginUser");
-        
+
         PageResult<CommentAndArticle> pageResult = null;
         if ("my".equals(option)) {
             mv.addObject("commentOption", "my");

@@ -30,10 +30,4 @@ public interface CategoryMapper {
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);
-
-	List<Category> selectByArticleId(long articleId);
-
-	List<CategoryVo> selectWithArticleCountByUid(Long userId);
-
-	void deleteArticleRelationByCid(Long categoryId);
 }

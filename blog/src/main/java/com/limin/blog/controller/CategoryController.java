@@ -1,10 +1,15 @@
 package com.limin.blog.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import com.limin.blog.dto.ValueObject;
+import com.limin.blog.entity.CategoryExample;
+import com.limin.blog.util.JedisAdapter;
+import com.limin.blog.util.RedisKeyUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,14 +27,23 @@ public class CategoryController {
 	@Resource
 	private CategoryService categoryService;
 	
-	
 	@RequestMapping("/manage/list")
 	public ModelAndView list(HttpSession session) {
 		ModelAndView mv = new ModelAndView("manage/category/list");
 		mv.addObject("option", "categoryManage");
 		User user = (User) session.getAttribute("loginUser");
-		List<CategoryVo> categories = categoryService.findWithArticleCountByUid(user.getId());
-		mv.addObject("categories", categories);
+
+		CategoryExample example = new CategoryExample();
+		example.createCriteria().andUserIdEqualTo(user.getId());
+		List<Category> categoryList = categoryService.findByExample(example);
+
+		List<ValueObject> categoryVos = new ArrayList<>();
+		for (Category category  : categoryList) {
+			Long articleCount = categoryService.findArticleCountById(category.getId());
+			categoryVos.add(new ValueObject().set("category", category).set("articleCount", articleCount));
+		}
+		mv.addObject("categoryVos", categoryVos);
+
 		return mv;
 	}
 	

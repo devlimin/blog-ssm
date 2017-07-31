@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import com.limin.blog.util.MailHelper;
 import org.springframework.stereotype.Service;
 
 import com.limin.blog.entity.User;
@@ -31,8 +32,8 @@ public class UserServiceImpl implements UserService {
         user.setHeadUrl(headUrl);
         userMapper.insert(user);
 
-       /* new Thread(// 发送认证邮件
-                new MailHelper(user.getCode(), user.getEmail())).start();*/
+        new Thread(// 发送认证邮件
+                new MailHelper(user.getCode(), user.getEmail())).start();
     }
 
     public void update(User user) {

@@ -13,12 +13,6 @@ public class Article {
 
     private Date releaseDate;
 
-    private Long support;
-
-    private Long against;
-
-    private Long viewCount;
-
     private String content;
 
     public Long getId() {
@@ -59,30 +53,6 @@ public class Article {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    public Long getSupport() {
-        return support;
-    }
-
-    public void setSupport(Long support) {
-        this.support = support;
-    }
-
-    public Long getAgainst() {
-        return against;
-    }
-
-    public void setAgainst(Long against) {
-        this.against = against;
-    }
-
-    public Long getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(Long viewCount) {
-        this.viewCount = viewCount;
     }
 
     public String getContent() {

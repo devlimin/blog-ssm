@@ -1,13 +1,16 @@
 package com.limin.blog.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
+import com.limin.blog.util.JedisAdapter;
+import com.limin.blog.util.RedisKeyUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
-import com.limin.blog.dto.CategoryVo;
 import com.limin.blog.entity.Category;
 import com.limin.blog.entity.CategoryExample;
 import com.limin.blog.mapper.CategoryMapper;
@@ -18,6 +21,9 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Resource
 	private CategoryMapper categoryMapper;
+
+	@Resource
+	private JedisAdapter jedisAdapter;
 	
 	@Override
 	public void add(Category category) {
@@ -28,7 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public void deleteById(Long id) {
 		categoryMapper.deleteByPrimaryKey(id);
-		categoryMapper.deleteArticleRelationByCid(id);
+
+		String categorykey = RedisKeyUtil.getCategory(id);
+		for (String articleId :jedisAdapter.smembers(categorykey)) {
+			String articlekey = RedisKeyUtil.getArticle(Long.parseLong(articleId));
+			jedisAdapter.srem(articlekey, String.valueOf(id));
+		}
+		jedisAdapter.del(categorykey);
+
 	}
 
 	@Override
@@ -51,16 +64,26 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> findByArticleId(long articleId) {
 		
-		List<Category> categoryList = categoryMapper.selectByArticleId(articleId);
-		
-		return categoryList;
+		String articlekey = RedisKeyUtil.getArticle(articleId);
+		Set<String> categoryIds = jedisAdapter.smembers(articlekey);
+		List<Category> categories = new ArrayList<>();
+		for(String categoryId : categoryIds) {
+			categories.add(findById(Long.parseLong(categoryId)));
+		}
+		return categories;
+	}
+
+
+	@Override
+	public Long findArticleCountById(Long id) {
+		String categorykey = RedisKeyUtil.getCategory(id);
+		return jedisAdapter.scard(categorykey);
 	}
 
 	@Override
-	public List<CategoryVo> findWithArticleCountByUid(Long userId) {
-		List<CategoryVo> list = categoryMapper.selectWithArticleCountByUid(userId);
-		
-		return list;
+	public Set<String> findArticleIdsById(Long categoryId) {
+		return jedisAdapter.smembers(RedisKeyUtil.getCategory(categoryId));
 	}
+
 
 }

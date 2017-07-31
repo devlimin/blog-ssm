@@ -15,7 +15,7 @@
 <div style="margin-top: 50px;">
 	<ul class="nav nav-tabs">
 		<li role="presentation" class="${option == 'articleManage' ? 'active' : ''}">
-			<a href="${pageContext.request.contextPath }/article/manage/list/-1">文章管理</a>
+			<a href="${pageContext.request.contextPath }/article/manage/list">文章管理</a>
 		</li>
 		<li role="presentation" class="${option == 'categoryManage' ? 'active' : ''}">
 			<a href="${pageContext.request.contextPath }/category/manage/list">类别管理</a>

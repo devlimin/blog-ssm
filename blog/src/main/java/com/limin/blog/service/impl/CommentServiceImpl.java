@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import com.limin.blog.dto.ValueObject;
 import com.limin.blog.entity.CommentExample;
+import com.limin.blog.util.JedisAdapter;
+import com.limin.blog.util.RedisKeyUtil;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -15,12 +17,16 @@ import com.limin.blog.entity.Comment;
 import com.limin.blog.mapper.CommentMapper;
 import com.limin.blog.service.CommentService;
 import com.limin.blog.util.PageResult;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service("commentService")
 public class CommentServiceImpl implements CommentService {
 
 	@Resource
 	private CommentMapper commentMapper;
+
+	@Resource
+	private JedisAdapter jedisAdapter;
 	
 	@Override
 	public void add(Comment comment) {

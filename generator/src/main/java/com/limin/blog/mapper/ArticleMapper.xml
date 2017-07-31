@@ -7,9 +7,6 @@
     <result column="sys_category" jdbcType="VARCHAR" property="sysCategory" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="release_date" jdbcType="TIMESTAMP" property="releaseDate" />
-    <result column="support" jdbcType="BIGINT" property="support" />
-    <result column="against" jdbcType="BIGINT" property="against" />
-    <result column="view_count" jdbcType="BIGINT" property="viewCount" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.limin.blog.entity.Article">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -73,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, sys_category, title, release_date, support, against, view_count
+    id, user_id, sys_category, title, release_date
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -128,12 +125,10 @@
   </delete>
   <insert id="insert" parameterType="com.limin.blog.entity.Article">
     insert into article (id, user_id, sys_category, 
-      title, release_date, support, 
-      against, view_count, content
+      title, release_date, content
       )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{sysCategory,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{releaseDate,jdbcType=TIMESTAMP}, #{support,jdbcType=BIGINT}, 
-      #{against,jdbcType=BIGINT}, #{viewCount,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}
+      #{title,jdbcType=VARCHAR}, #{releaseDate,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.limin.blog.entity.Article">
@@ -154,15 +149,6 @@
       <if test="releaseDate != null">
         release_date,
       </if>
-      <if test="support != null">
-        support,
-      </if>
-      <if test="against != null">
-        against,
-      </if>
-      <if test="viewCount != null">
-        view_count,
-      </if>
       <if test="content != null">
         content,
       </if>
@@ -182,15 +168,6 @@
       </if>
       <if test="releaseDate != null">
         #{releaseDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="support != null">
-        #{support,jdbcType=BIGINT},
-      </if>
-      <if test="against != null">
-        #{against,jdbcType=BIGINT},
-      </if>
-      <if test="viewCount != null">
-        #{viewCount,jdbcType=BIGINT},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -221,15 +198,6 @@
       <if test="record.releaseDate != null">
         release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.support != null">
-        support = #{record.support,jdbcType=BIGINT},
-      </if>
-      <if test="record.against != null">
-        against = #{record.against,jdbcType=BIGINT},
-      </if>
-      <if test="record.viewCount != null">
-        view_count = #{record.viewCount,jdbcType=BIGINT},
-      </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -245,9 +213,6 @@
       sys_category = #{record.sysCategory,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
-      support = #{record.support,jdbcType=BIGINT},
-      against = #{record.against,jdbcType=BIGINT},
-      view_count = #{record.viewCount,jdbcType=BIGINT},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -259,10 +224,7 @@
       user_id = #{record.userId,jdbcType=BIGINT},
       sys_category = #{record.sysCategory,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
-      release_date = #{record.releaseDate,jdbcType=TIMESTAMP},
-      support = #{record.support,jdbcType=BIGINT},
-      against = #{record.against,jdbcType=BIGINT},
-      view_count = #{record.viewCount,jdbcType=BIGINT}
+      release_date = #{record.releaseDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -282,15 +244,6 @@
       <if test="releaseDate != null">
         release_date = #{releaseDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="support != null">
-        support = #{support,jdbcType=BIGINT},
-      </if>
-      <if test="against != null">
-        against = #{against,jdbcType=BIGINT},
-      </if>
-      <if test="viewCount != null">
-        view_count = #{viewCount,jdbcType=BIGINT},
-      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -303,9 +256,6 @@
       sys_category = #{sysCategory,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       release_date = #{releaseDate,jdbcType=TIMESTAMP},
-      support = #{support,jdbcType=BIGINT},
-      against = #{against,jdbcType=BIGINT},
-      view_count = #{viewCount,jdbcType=BIGINT},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -314,10 +264,7 @@
     set user_id = #{userId,jdbcType=BIGINT},
       sys_category = #{sysCategory,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      release_date = #{releaseDate,jdbcType=TIMESTAMP},
-      support = #{support,jdbcType=BIGINT},
-      against = #{against,jdbcType=BIGINT},
-      view_count = #{viewCount,jdbcType=BIGINT}
+      release_date = #{releaseDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

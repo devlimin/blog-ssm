@@ -24,8 +24,5 @@
 			<bean class="com.limin.blog.interceptor.ManageInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
-	
-		
 </beans>
 

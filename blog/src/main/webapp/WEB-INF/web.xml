@@ -5,10 +5,10 @@
          id="WebApp_ID" version="3.1">
   <display-name>blog</display-name>
 
-  <!-- Spring和mybatis的配置文件 -->
+  <!-- mybatis,service,redis的配置文件 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring/spring-mybatis.xml,classpath:spring/spring-service.xml</param-value>
+    <param-value>classpath:spring/spring-mybatis.xml,classpath:spring/spring-service.xml,classpath:spring/spring-redis.xml</param-value>
   </context-param>
   <!-- spring监听器 -->
   <listener>

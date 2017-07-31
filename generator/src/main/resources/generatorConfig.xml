@@ -22,6 +22,7 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
+
         <!-- targetProject:生成PO类的位置 -->
         <javaModelGenerator targetPackage="com.limin.blog.entity"
                             targetProject=".\generator\src\main\java">
@@ -30,6 +31,7 @@
             <!-- 从数据库返回的值被清理前后的空格 -->
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
+
         <!-- targetProject:mapper映射文件生成的位置 -->
         <sqlMapGenerator targetPackage="com.limin.blog.mapper"
                          targetProject=".\generator\src\main\java">
@@ -44,8 +46,11 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
         <table tableName="article"></table>
+        <!--
         <table tableName="user"></table>
         <table tableName="category"></table>
         <table tableName="comment"></table>
+        <table tableName="article_category"></table>
+        -->
     </context>
 </generatorConfiguration>
